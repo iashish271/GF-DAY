@@ -1,691 +1,1756 @@
-/* ============================================
+/* ======================================================
    A LITTLE UNIVERSE MADE JUST FOR YOU
-   Premium Cinematic Interactive Website
-   ============================================ */
+   script.js - PART 1
+====================================================== */
 
-const CONFIG = {
-    password: "love",
-    letterText: `Every time I think of you, my heart fills with warmth and joy. You have this incredible way of making even the simplest moments feel magical. Your smile lights up my world, and your laughter is the sweetest melody I have ever heard.\n\nI am so grateful to have you in my life. You are my sunshine on cloudy days, my calm in the storm, and my favorite person in the entire universe. I hope this little surprise brings a smile to your face, because seeing you happy is all I ever want.\n\nYou are loved. You are cherished. You are everything to me.`,
-    wrongMessages: [
-        "🌙 The stars don't recognize this password...",
-        "🥺 Hmm... maybe try again?",
-        "✨ Wrong galaxy... try another secret.",
-        "💖 Almost... but not this one.",
-        "⭐ Even the stars look confused."
-    ],
-    photoNames: ['photo1.jpg', 'photo2.jpg', 'photo3.jpg'],
-    photoCaptions: ['A precious moment 💕', 'Forever us 🌸', 'My favorite smile ✨'],
-    crystalIcons: ['💎', '🔮', '💠'],
-};
+/* ==========================
+      ELEMENTS
+========================== */
 
-const $ = (sel) => document.querySelector(sel);
-const $$ = (sel) => document.querySelectorAll(sel);
+const pages = document.querySelectorAll(".page");
 
-let currentPage = '';
-let musicPlaying = false;
-let letterOpened = false;
-let giftOpened = false;
+const loadingScreen = document.getElementById("loadingScreen");
 
-/* ============================================
-   INIT
-   ============================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    initIntro();
-    initMusic();
-    initPassword();
-    initSpaceTravel();
-    initWelcome();
-    initMemories();
-    initLetter();
-    initSurprise();
-    initEnding();
-    initNavigation();
+const introPage = document.getElementById("introPage");
+
+const passwordPage = document.getElementById("passwordPage");
+
+const explosionOverlay = document.getElementById("explosionOverlay");
+
+const mainStar = document.getElementById("mainStar");
+
+const music = document.getElementById("bgMusic");
+
+const musicBtn = document.getElementById("musicToggle");
+
+const cursor = document.getElementById("cursor");
+
+const blur = document.getElementById("cursor-blur");
+
+/* ==========================
+      LOADING
+========================== */
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+loadingScreen.style.opacity="0";
+
+setTimeout(()=>{
+
+loadingScreen.remove();
+
+showPage(introPage);
+
+},800);
+
+},2500);
+
 });
 
-/* ============================================
-   INTRO SCREEN
-   ============================================ */
-function initIntro() {
-    const intro = $('#intro-screen');
-    const starsContainer = $('#intro-stars');
-    const glowStar = $('#intro-glow-star');
-    const textContainer = $('#intro-text-container');
-    const hint = $('#intro-hint');
+/* ==========================
+      PAGE SWITCHER
+========================== */
 
-    // Create twinkling stars
-    for (let i = 0; i < 300; i++) {
-        const star = document.createElement('div');
-        star.className = 'intro-star';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.setProperty('--dur', (Math.random() * 3 + 1) + 's');
-        star.style.animationDelay = Math.random() * 3 + 's';
-        star.style.width = (Math.random() * 2 + 1) + 'px';
-        star.style.height = star.style.width;
-        starsContainer.appendChild(star);
+function showPage(page){
+
+pages.forEach(p=>{
+
+p.classList.remove("active");
+
+});
+
+page.classList.add("active");
+
+}
+
+/* ==========================
+      CUSTOM CURSOR
+========================== */
+
+document.addEventListener("mousemove",(e)=>{
+
+cursor.style.left=e.clientX+"px";
+
+cursor.style.top=e.clientY+"px";
+
+blur.style.left=e.clientX-18+"px";
+
+blur.style.top=e.clientY-18+"px";
+
+});
+
+/* ==========================
+      MUSIC
+========================== */
+
+let playing=false;
+
+musicBtn.addEventListener("click",()=>{
+
+if(!playing){
+
+music.play();
+
+playing=true;
+
+musicBtn.innerHTML="🔊";
+
+}else{
+
+music.pause();
+
+playing=false;
+
+musicBtn.innerHTML="🔈";
+
+}
+
+});
+
+/* ==========================
+      INTRO STARS
+========================== */
+
+const introStars=document.getElementById("introStars");
+
+for(let i=0;i<250;i++){
+
+const star=document.createElement("div");
+
+star.className="introStar";
+
+const size=Math.random()*3+1;
+
+star.style.width=size+"px";
+
+star.style.height=size+"px";
+
+star.style.left=Math.random()*100+"%";
+
+star.style.top=Math.random()*100+"%";
+
+star.style.animationDuration=(2+Math.random()*4)+"s";
+
+introStars.appendChild(star);
+
+}
+
+/* ==========================
+      EXPLOSION PARTICLES
+========================== */
+
+const particleContainer=document.getElementById("explosionParticles");
+
+function createExplosion(){
+
+particleContainer.innerHTML="";
+
+for(let i=0;i<250;i++){
+
+const p=document.createElement("div");
+
+p.style.position="absolute";
+
+p.style.width="5px";
+
+p.style.height="5px";
+
+p.style.borderRadius="50%";
+
+p.style.background=`hsl(${Math.random()*60+280},100%,70%)`;
+
+p.style.left="50%";
+
+p.style.top="50%";
+
+const x=(Math.random()-0.5)*1800;
+
+const y=(Math.random()-0.5)*1800;
+
+p.animate([
+
+{
+
+transform:"translate(0,0) scale(1)",
+
+opacity:1
+
+},
+
+{
+
+transform:`translate(${x}px,${y}px) scale(0)`,
+
+opacity:0
+
+}
+
+],{
+
+duration:1800,
+
+easing:"cubic-bezier(.2,.8,.2,1)"
+
+});
+
+particleContainer.appendChild(p);
+
+}
+
+}
+
+/* ==========================
+      MAIN STAR CLICK
+========================== */
+
+mainStar.addEventListener("click",()=>{
+
+createExplosion();
+
+explosionOverlay.style.opacity="1";
+
+setTimeout(()=>{
+
+explosionOverlay.style.opacity="0";
+
+showPage(passwordPage);
+
+},1700);
+
+});
+
+/* ==========================
+      AUTO MUSIC TRY
+========================== */
+
+document.body.addEventListener("click",()=>{
+
+if(!playing){
+
+music.play().catch(()=>{});
+
+playing=true;
+
+musicBtn.innerHTML="🔊";
+
+}
+
+},{once:true});
+
+/* ==========================
+      RANDOM TWINKLE
+========================== */
+
+setInterval(()=>{
+
+const stars=document.querySelectorAll(".introStar");
+
+if(stars.length===0)return;
+
+const star=stars[Math.floor(Math.random()*stars.length)];
+
+star.animate([
+
+{
+
+transform:"scale(1)"
+
+},
+
+{
+
+transform:"scale(2.4)"
+
+},
+
+{
+
+transform:"scale(1)"
+
+}
+
+],{
+
+duration:900
+
+});
+
+},400);
+
+/* ==========================
+      SMOOTH FADE
+========================== */
+
+function fadeElement(el){
+
+el.animate([
+
+{
+
+opacity:0
+
+},
+
+{
+
+opacity:1
+
+}
+
+],{
+
+duration:700
+
+});
+
+}
+/* ======================================================
+        PASSWORD SYSTEM
+====================================================== */
+
+const passwordInput = document.getElementById("passwordInput");
+const unlockBtn = document.getElementById("unlockBtn");
+
+const wrongOverlay = document.getElementById("wrongOverlay");
+const retryBtn = document.getElementById("retryBtn");
+const wrongMessage = document.getElementById("wrongMessage");
+
+const passwordError = document.getElementById("passwordError");
+
+const planet = document.getElementById("planet");
+const planetLock = document.getElementById("planetLock");
+const planetLight = document.getElementById("planetLight");
+const planetCrack = document.getElementById("planetCrack");
+
+const spaceTravel = document.getElementById("spaceTravel");
+
+/* ==========================
+        PASSWORD
+========================== */
+
+/*
+CHANGE THIS PASSWORD
+*/
+
+const SECRET_PASSWORD = "0108";
+
+/* ==========================
+      UNLOCK BUTTON
+========================== */
+
+unlockBtn.addEventListener("click", checkPassword);
+
+passwordInput.addEventListener("keydown",(e)=>{
+
+    if(e.key==="Enter"){
+
+        checkPassword();
+
     }
 
-    // Position glow star
-    glowStar.style.left = '50%';
-    glowStar.style.top = '40%';
-    glowStar.style.transform = 'translate(-50%, -50%)';
+});
 
-    // Sequence: wait 3s, show glow star, then text
-    setTimeout(() => {
-        glowStar.classList.add('visible');
+/* ==========================
+      CHECK PASSWORD
+========================== */
 
-        // Typewriter text lines
-        const lines = $$('.intro-line');
-        let delay = 500;
-        lines.forEach((line) => {
-            const text = line.dataset.text;
-            line.textContent = '';
-            setTimeout(() => {
-                line.classList.add('visible');
-                let ci = 0;
-                const iv = setInterval(() => {
-                    if (ci < text.length) {
-                        line.textContent += text[ci];
-                        ci++;
-                    } else {
-                        clearInterval(iv);
-                    }
-                }, 50);
-            }, delay);
-            delay += text.length * 50 + 800;
-        });
+function checkPassword(){
 
-        // Show hint after text
-        setTimeout(() => {
-            hint.classList.remove('hidden');
-            hint.classList.add('visible');
-        }, delay + 500);
-    }, 3000);
+const value=passwordInput.value.trim();
 
-    // Click glow star
-    glowStar.addEventListener('click', () => {
-        glowStar.classList.add('sparkle');
-        createStarExplosion();
-        setTimeout(() => {
-            intro.classList.add('hidden');
-            setTimeout(() => {
-                navigateTo('page-password');
-            }, 1000);
-        }, 1500);
-    });
+if(value===SECRET_PASSWORD){
+
+unlockSuccess();
+
+}else{
+
+unlockFail();
+
 }
 
-function createStarExplosion() {
-    const overlay = $('#explosion-overlay');
-    const particles = $('#explosion-particles');
-    const nebula = $('#nebula-bg');
-
-    overlay.classList.add('active');
-    nebula.classList.add('visible');
-
-    const colors = ['#ffd700', '#c77dff', '#ff8fab', '#e0aaff', '#ffffff'];
-    for (let i = 0; i < 60; i++) {
-        const p = document.createElement('div');
-        p.className = 'explosion-particle';
-        p.style.left = '50%';
-        p.style.top = '40%';
-        p.style.width = (Math.random() * 6 + 3) + 'px';
-        p.style.height = p.style.width;
-        p.style.background = colors[Math.floor(Math.random() * colors.length)];
-        p.style.boxShadow = `0 0 10px ${p.style.background}`;
-        const angle = (Math.PI * 2 * i) / 60 + (Math.random() - 0.5);
-        const dist = Math.random() * 400 + 100;
-        p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-        p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-        particles.appendChild(p);
-        setTimeout(() => p.remove(), 2000);
-    }
 }
 
-/* ============================================
-   PASSWORD PAGE
-   ============================================ */
-function initPassword() {
-    const starsContainer = $('#password-stars');
-    for (let i = 0; i < 200; i++) {
-        const star = document.createElement('div');
-        star.className = 'password-star';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.setProperty('--dur', (Math.random() * 3 + 1) + 's');
-        star.style.animationDelay = Math.random() * 3 + 's';
-        starsContainer.appendChild(star);
-    }
+/* ==========================
+      SUCCESS
+========================== */
 
-    const input = $('#password-input');
-    const submit = $('#password-submit');
-    const error = $('#password-error');
-    const box = $('#password-box');
-    const planet = $('#password-planet');
-    const lock = $('#planet-lock');
-    const crack = $('#planet-crack');
-    const light = $('#planet-light');
+function unlockSuccess(){
 
-    function checkPassword() {
-        const val = input.value.trim().toLowerCase();
-        if (val === CONFIG.password.toLowerCase()) {
-            // Correct!
-            error.classList.add('hidden');
-            box.classList.remove('shake');
-            // Planet glows, cracks, light
-            crack.classList.add('visible');
-            setTimeout(() => {
-                light.classList.add('visible');
-                lock.classList.add('open');
-            }, 300);
-            // Heart particles
-            createHeartBurst();
-            // Transition
-            setTimeout(() => {
-                navigateTo('page-space');
-                startSpaceTravel();
-            }, 2500);
-        } else {
-            // Wrong!
-            box.classList.add('shake');
-            setTimeout(() => box.classList.remove('shake'), 500);
-            // Darken background
-            document.body.style.background = '#050510';
-            setTimeout(() => { document.body.style.background = ''; }, 2000);
-            // Dim stars
-            $$('.password-star').forEach(s => { s.style.opacity = '0.3'; });
-            setTimeout(() => {
-                $$('.password-star').forEach(s => { s.style.opacity = ''; });
-            }, 2000);
-            // Meteor
-            createMeteor();
-            // Show GIF overlay
-            showWrongOverlay();
-            input.value = '';
-        }
-    }
+passwordError.innerHTML="";
 
-    submit.addEventListener('click', checkPassword);
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
+planetLock.innerHTML="🔓";
 
-    // Try Again button
-    $('#try-again-btn').addEventListener('click', () => {
-        $('#wrong-gif-overlay').classList.remove('visible');
-        setTimeout(() => $('#wrong-gif-overlay').classList.add('hidden'), 500);
-        input.placeholder = 'Try once more... ✨';
-        input.focus();
-    });
+planetLight.style.opacity="1";
+
+planet.animate([
+
+{
+
+transform:"scale(1)"
+
+},
+
+{
+
+transform:"scale(1.08)"
+
+},
+
+{
+
+transform:"scale(1)"
+
 }
 
-function createMeteor() {
-    const meteor = document.createElement('div');
-    meteor.className = 'meteor';
-    meteor.style.left = (Math.random() * 50 + 50) + '%';
-    meteor.style.top = (Math.random() * 30) + '%';
-    document.body.appendChild(meteor);
-    setTimeout(() => meteor.remove(), 1000);
+],{
+
+duration:900
+
+});
+
+setTimeout(()=>{
+
+showPage(spaceTravel);
+
+startWarp();
+
+},1800);
+
 }
 
-function showWrongOverlay() {
-    const overlay = $('#wrong-gif-overlay');
-    const text = $('#wrong-text');
-    const msg = CONFIG.wrongMessages[Math.floor(Math.random() * CONFIG.wrongMessages.length)];
-    text.textContent = '';
-    overlay.classList.remove('hidden');
-    overlay.classList.add('visible');
+/* ==========================
+      FAILURE
+========================== */
 
-    // Typewriter for wrong message
-    let ci = 0;
-    const iv = setInterval(() => {
-        if (ci < msg.length) {
-            text.textContent += msg[ci];
-            ci++;
-        } else {
-            clearInterval(iv);
-        }
-    }, 40);
+function unlockFail(){
+
+passwordError.innerHTML="Wrong Password 💔";
+
+shakePlanet();
+
+showWrongPopup();
+
+meteor();
+
 }
 
-function createHeartBurst() {
-    const hearts = ['💖', '💕', '💗', '💝', '💘', '❤️', '💓', '💞'];
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight / 2;
-    for (let i = 0; i < 30; i++) {
-        const h = document.createElement('span');
-        h.style.position = 'fixed';
-        h.style.left = cx + 'px';
-        h.style.top = cy + 'px';
-        h.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-        h.style.color = hearts[Math.floor(Math.random() * hearts.length)];
-        h.style.pointerEvents = 'none';
-        h.style.zIndex = '9999';
-        h.style.animation = 'burst-fly 1.5s ease-out forwards';
-        const angle = (Math.PI * 2 * i) / 30 + (Math.random() - 0.5) * 0.5;
-        const dist = Math.random() * 300 + 100;
-        h.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-        h.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 1500);
-    }
+/* ==========================
+      SHAKE
+========================== */
+
+function shakePlanet(){
+
+planet.animate([
+
+{
+
+transform:"translateX(0)"
+
+},
+
+{
+
+transform:"translateX(-12px)"
+
+},
+
+{
+
+transform:"translateX(12px)"
+
+},
+
+{
+
+transform:"translateX(-8px)"
+
+},
+
+{
+
+transform:"translateX(8px)"
+
+},
+
+{
+
+transform:"translateX(0)"
+
 }
 
-/* ============================================
-   SPACE TRAVEL
-   ============================================ */
-function initSpaceTravel() {
-    // Pre-create shooting stars
-    const container = $('#space-travel');
-    for (let i = 0; i < 10; i++) {
-        const star = document.createElement('div');
-        star.className = 'shooting-star';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = '-100px';
-        star.style.animationDuration = (Math.random() * 2 + 1) + 's';
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(star);
-    }
+],{
+
+duration:500
+
+});
+
+planetCrack.style.opacity=".7";
+
+setTimeout(()=>{
+
+planetCrack.style.opacity="0";
+
+},700);
+
 }
 
-function startSpaceTravel() {
-    const layers = ['space-galaxy', 'space-nebula', 'space-saturn', 'space-moon', 'space-hearts', 'space-aurora'];
-    let delay = 0;
-    layers.forEach((id, i) => {
-        setTimeout(() => {
-            $(`#${id}`).classList.add('visible');
-        }, delay);
-        delay += 1500;
-    });
+/* ==========================
+      METEOR
+========================== */
 
-    // Transition to welcome after space travel
-    setTimeout(() => {
-        navigateTo('page-welcome');
-        startWelcomeTypewriter();
-    }, delay + 2000);
+function meteor(){
+
+const m=document.createElement("div");
+
+m.className="meteor";
+
+m.style.top=Math.random()*150+"px";
+
+m.style.left=(window.innerWidth+100)+"px";
+
+document.body.appendChild(m);
+
+setTimeout(()=>{
+
+m.remove();
+
+},1200);
+
 }
 
-/* ============================================
-   WELCOME PAGE
-   ============================================ */
-function initWelcome() {
-    // Clouds
-    const cloudContainer = $('#welcome-clouds');
-    for (let i = 0; i < 6; i++) {
-        const cloud = document.createElement('div');
-        cloud.className = 'welcome-cloud';
-        cloud.style.width = (Math.random() * 200 + 100) + 'px';
-        cloud.style.height = (Math.random() * 60 + 40) + 'px';
-        cloud.style.top = (Math.random() * 60) + '%';
-        cloud.style.left = '-200px';
-        cloud.style.animationDuration = (Math.random() * 20 + 20) + 's';
-        cloud.style.animationDelay = (Math.random() * 10) + 's';
-        cloudContainer.appendChild(cloud);
-    }
+/* ==========================
+      WRONG POPUP
+========================== */
 
-    // Sakura petals
-    const petalContainer = $('#welcome-petals');
-    for (let i = 0; i < 20; i++) {
-        const petal = document.createElement('span');
-        petal.className = 'sakura-petal';
-        petal.textContent = '🌸';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        petal.style.animationDelay = (Math.random() * 5) + 's';
-        petalContainer.appendChild(petal);
-    }
+function showWrongPopup(){
 
-    // Butterflies
-    const bfContainer = $('#welcome-butterflies');
-    for (let i = 0; i < 8; i++) {
-        const bf = document.createElement('span');
-        bf.className = 'butterfly';
-        bf.textContent = '🦋';
-        bf.style.left = Math.random() * 100 + 'vw';
-        bf.style.bottom = (Math.random() * 20) + '%';
-        bf.style.animationDuration = (Math.random() * 6 + 6) + 's';
-        bf.style.animationDelay = (Math.random() * 5) + 's';
-        bfContainer.appendChild(bf);
-    }
+wrongOverlay.classList.add("show");
+
+typeWrongMessage();
+
 }
 
-function startWelcomeTypewriter() {
-    const lines = $$('.welcome-line');
-    let delay = 500;
-    lines.forEach((line) => {
-        const text = line.dataset.text;
-        line.textContent = '';
-        setTimeout(() => {
-            line.classList.add('visible');
-            let ci = 0;
-            const iv = setInterval(() => {
-                if (ci < text.length) {
-                    line.textContent += text[ci];
-                    ci++;
-                } else {
-                    clearInterval(iv);
-                }
-            }, 45);
-        }, delay);
-        delay += text.length * 45 + 600;
-    });
-    setTimeout(() => {
-        $('#btn-to-memories').classList.remove('hidden');
-    }, delay + 500);
+/* ==========================
+      TYPEWRITER
+========================== */
+
+const wrongText="Oops... The universe says that's not the right password ✨";
+
+function typeWrongMessage(){
+
+wrongMessage.innerHTML="";
+
+let i=0;
+
+const typing=setInterval(()=>{
+
+wrongMessage.innerHTML+=wrongText.charAt(i);
+
+i++;
+
+if(i>=wrongText.length){
+
+clearInterval(typing);
+
 }
 
-/* ============================================
-   MEMORY SECTION
-   ============================================ */
-function initMemories() {
-    const container = $('#memory-crystals');
-    CONFIG.photoNames.forEach((name, i) => {
-        const crystal = document.createElement('div');
-        crystal.className = 'crystal';
-        crystal.style.setProperty('--float-dur', (Math.random() * 2 + 3) + 's');
-        crystal.style.setProperty('--float-delay', (Math.random() * 2) + 's');
-        crystal.innerHTML = `
-            <div class="crystal-shape">
-                <span class="crystal-icon">${CONFIG.crystalIcons[i % CONFIG.crystalIcons.length]}</span>
-            </div>
-            <p class="crystal-label">Memory ${i + 1}</p>
-        `;
-        crystal.addEventListener('click', () => openCrystalModal(i));
-        container.appendChild(crystal);
-    });
+},35);
 
-    // Close modal
-    $('.crystal-close').addEventListener('click', closeCrystalModal);
-    $('#crystal-modal').addEventListener('click', (e) => {
-        if (e.target === $('#crystal-modal')) closeCrystalModal();
-    });
 }
 
-function openCrystalModal(index) {
-    const modal = $('#crystal-modal');
-    const photo = $('#crystal-photo');
-    const caption = $('#crystal-caption');
+/* ==========================
+      RETRY
+========================== */
 
-    photo.src = `images/${CONFIG.photoNames[index]}`;
-    photo.onerror = () => { photo.src = `https://placehold.co/400x400/7b2cbf/ffffff?text=Memory+${index+1}`; };
-    caption.textContent = CONFIG.photoCaptions[index];
+retryBtn.addEventListener("click",()=>{
 
-    modal.classList.remove('hidden');
-    modal.classList.add('visible');
+wrongOverlay.classList.remove("show");
+
+passwordInput.focus();
+
+});
+
+/* ==========================
+      ENTER EFFECT
+========================== */
+
+passwordInput.addEventListener("focus",()=>{
+
+planetLight.style.opacity=".5";
+
+});
+
+passwordInput.addEventListener("blur",()=>{
+
+planetLight.style.opacity="0";
+
+});
+
+/* ==========================
+      WARP STARS
+========================== */
+
+const warp=document.getElementById("warpStars");
+
+function startWarp(){
+
+warp.innerHTML="";
+
+for(let i=0;i<350;i++){
+
+const star=document.createElement("div");
+
+star.className="warpStar";
+
+star.style.left=Math.random()*100+"vw";
+
+star.style.animationDuration=(.4+Math.random()*1.4)+"s";
+
+star.style.animationDelay=Math.random()*1+"s";
+
+warp.appendChild(star);
+
 }
 
-function closeCrystalModal() {
-    const modal = $('#crystal-modal');
-    modal.classList.remove('visible');
-    setTimeout(() => modal.classList.add('hidden'), 500);
 }
 
-/* ============================================
-   SECRET LETTER
-   ============================================ */
-function initLetter() {
-    const envelope = $('#envelope-wrapper');
-    const envelopeEl = $('#envelope');
-    const letterBody = $('#letter-body');
+/* ==========================
+      RANDOM METEORS
+========================== */
 
-    envelope.addEventListener('click', () => {
-        if (letterOpened) return;
-        letterOpened = true;
-        envelopeEl.classList.add('open');
-        setTimeout(() => {
-            typeLetterText(letterBody, CONFIG.letterText);
-        }, 1200);
-    });
+setInterval(()=>{
+
+if(document.getElementById("spaceTravel").classList.contains("active")){
+
+meteor();
+
 }
 
-function typeLetterText(element, text) {
-    element.innerHTML = '';
-    let i = 0;
-    function typeChar() {
-        if (i < text.length) {
-            const c = text[i];
-            if (c === '\n') {
-                element.appendChild(document.createElement('br'));
-            } else {
-                const s = document.createElement('span');
-                s.className = 'typed-char';
-                s.style.animationDelay = '0s';
-                s.textContent = c;
-                element.appendChild(s);
-            }
-            i++;
-            setTimeout(typeChar, 30);
-        } else {
-            setTimeout(() => {
-                $('#btn-to-surprise').classList.remove('hidden');
-            }, 800);
-        }
-    }
-    typeChar();
+},2500);
+
+/* ==========================
+      PLANET GLOW LOOP
+========================== */
+
+setInterval(()=>{
+
+planet.animate([
+
+{
+
+filter:"drop-shadow(0 0 5px #fff)"
+
+},
+
+{
+
+filter:"drop-shadow(0 0 25px #ffd966)"
+
+},
+
+{
+
+filter:"drop-shadow(0 0 5px #fff)"
+
 }
 
-/* ============================================
-   SURPRISE PAGE
-   ============================================ */
-function initSurprise() {
-    const giftBox = $('#gift-box');
-    const lid = $('#gift-lid');
-    const bow = $('#gift-bow');
-    const title = $('#surprise-title');
-    const text = $('#surprise-text');
+],{
 
-    giftBox.addEventListener('click', () => {
-        if (giftOpened) return;
-        giftOpened = true;
+duration:1800
 
-        lid.classList.add('open');
-        bow.classList.add('open');
+});
 
-        // Confetti
-        createSurpriseConfetti();
-        // Hearts
-        createSurpriseHearts();
-        // Butterflies
-        createSurpriseButterflies();
+},2200);
+/* ======================================================
+        SPACE TRAVEL & DREAM PLANET
+====================================================== */
 
-        setTimeout(() => {
-            title.classList.remove('hidden');
-            text.classList.remove('hidden');
-            $('#btn-to-ending').classList.remove('hidden');
-        }, 1000);
-    });
+const rocket = document.getElementById("rocket");
+const dreamPlanet = document.getElementById("dreamPlanet");
+const floatingIsland = document.getElementById("floatingIsland");
+const butterflyRain = document.getElementById("butterflyRain");
+const sparkleContainer = document.getElementById("sparkleContainer");
+
+/* ==========================
+        ROCKET LAUNCH
+========================== */
+
+function launchRocket(){
+
+rocket.animate([
+
+{
+transform:"translate(-50%,-50%) scale(1)"
+},
+
+{
+transform:"translate(-50%,-80%) scale(.9)"
+},
+
+{
+transform:"translate(-50%,-250%) scale(.6)",
+opacity:0
 }
 
-function createSurpriseConfetti() {
-    const container = $('#surprise-confetti');
-    const colors = ['#ff8fab', '#fb6f92', '#e0c3fc', '#ffc2d1', '#ffd700', '#c77dff'];
-    for (let i = 0; i < 60; i++) {
-        setTimeout(() => {
-            const c = document.createElement('div');
-            c.style.position = 'absolute';
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.width = (Math.random() * 8 + 4) + 'px';
-            c.style.height = c.style.width;
-            c.style.background = colors[Math.floor(Math.random() * colors.length)];
-            c.style.borderRadius = '2px';
-            c.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
-            container.appendChild(c);
-            setTimeout(() => c.remove(), 5000);
-        }, i * 50);
-    }
+],{
+
+duration:4500,
+
+easing:"ease-in-out",
+
+fill:"forwards"
+
+});
+
 }
 
-function createSurpriseHearts() {
-    const container = $('#surprise-hearts');
-    const hearts = ['💖', '💕', '💗', '💝', '💘', '❤️'];
-    for (let i = 0; i < 30; i++) {
-        setTimeout(() => {
-            const h = document.createElement('span');
-            h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-            h.style.position = 'absolute';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 1.2 + 0.8) + 'rem';
-            h.style.animation = `heart-rain-fall ${Math.random() * 3 + 2}s linear forwards`;
-            container.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
-        }, i * 80);
-    }
+/* ==========================
+      SPACE PARTICLES
+========================== */
+
+function createSpaceParticles(){
+
+for(let i=0;i<200;i++){
+
+const star=document.createElement("div");
+
+star.className="particle";
+
+star.style.left=Math.random()*100+"vw";
+
+star.style.top=Math.random()*100+"vh";
+
+star.style.width=(1+Math.random()*4)+"px";
+
+star.style.height=star.style.width;
+
+star.style.animationDuration=(5+Math.random()*12)+"s";
+
+sparkleContainer.appendChild(star);
+
 }
 
-function createSurpriseButterflies() {
-    const container = $('#surprise-butterflies');
-    for (let i = 0; i < 10; i++) {
-        setTimeout(() => {
-            const b = document.createElement('span');
-            b.textContent = '🦋';
-            b.style.position = 'absolute';
-            b.style.left = Math.random() * 100 + 'vw';
-            b.style.bottom = '0';
-            b.style.fontSize = '1.5rem';
-            b.style.animation = `butterfly-float ${Math.random() * 4 + 4}s linear forwards`;
-            container.appendChild(b);
-            setTimeout(() => b.remove(), 8000);
-        }, i * 200);
-    }
 }
 
-/* ============================================
-   ENDING PAGE
-   ============================================ */
-function initEnding() {
-    const starsContainer = $('#ending-stars');
-    for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.className = 'ending-star';
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.setProperty('--dur', (Math.random() * 3 + 2) + 's');
-        star.style.animationDelay = Math.random() * 3 + 's';
-        starsContainer.appendChild(star);
-    }
+/* ==========================
+      SHOOTING STARS
+========================== */
+
+function shootingStar(){
+
+const star=document.createElement("div");
+
+star.className="shootingStar";
+
+star.style.left=(window.innerWidth+200)+"px";
+
+star.style.top=Math.random()*200+"px";
+
+document.body.appendChild(star);
+
+setTimeout(()=>{
+
+star.remove();
+
+},4500);
+
 }
 
-function startEnding() {
-    const moon = $('#ending-moon');
-    const heart = $('#ending-heart');
-    const lines = $$('.ending-line');
+setInterval(()=>{
 
-    moon.classList.add('visible');
+if(spaceTravel.classList.contains("active")){
 
-    setTimeout(() => {
-        heart.classList.add('visible');
-    }, 1000);
+shootingStar();
 
-    let delay = 2000;
-    lines.forEach((line) => {
-        const text = line.dataset.text;
-        line.textContent = '';
-        setTimeout(() => {
-            line.classList.add('visible');
-            let ci = 0;
-            const iv = setInterval(() => {
-                if (ci < text.length) {
-                    line.textContent += text[ci];
-                    ci++;
-                } else {
-                    clearInterval(iv);
-                }
-            }, 60);
-        }, delay);
-        delay += text.length * 60 + 1000;
-    });
-
-    // Heart flies away
-    setTimeout(() => {
-        heart.style.transition = 'transform 3s ease, opacity 3s ease';
-        heart.style.transform = 'translateY(-200px) scale(0.5)';
-        heart.style.opacity = '0';
-    }, delay + 2000);
 }
 
-/* ============================================
-   MUSIC
-   ============================================ */
-function initMusic() {
-    const music = $('#bg-music');
-    const toggle = $('#music-toggle');
+},2800);
 
-    toggle.addEventListener('click', () => {
-        if (musicPlaying) {
-            music.pause();
-            toggle.classList.remove('playing');
-            musicPlaying = false;
-        } else {
-            music.play().then(() => {
-                toggle.classList.add('playing');
-                musicPlaying = true;
-            }).catch(() => {});
-        }
-    });
+/* ==========================
+      ARRIVE
+========================== */
 
-    const tryAutoplay = () => {
-        if (!musicPlaying) {
-            music.play().then(() => {
-                toggle.classList.add('playing');
-                musicPlaying = true;
-            }).catch(() => {});
-        }
-        document.removeEventListener('click', tryAutoplay);
-        document.removeEventListener('touchstart', tryAutoplay);
-    };
-    document.addEventListener('click', tryAutoplay);
-    document.addEventListener('touchstart', tryAutoplay);
+function arriveDreamPlanet(){
+
+showPage(dreamPlanet);
+
+createClouds();
+
+createFlowers();
+
+createButterflies();
+
 }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
-function initNavigation() {
-    $('#btn-to-memories').addEventListener('click', () => navigateTo('page-memories'));
-    $('#btn-to-letter').addEventListener('click', () => navigateTo('page-letter'));
-    $('#btn-to-surprise').addEventListener('click', () => navigateTo('page-surprise'));
-    $('#btn-to-ending').addEventListener('click', () => {
-        navigateTo('page-ending');
-        startEnding();
-    });
+/* ==========================
+      CLOUDS
+========================== */
+
+function createClouds(){
+
+for(let i=0;i<18;i++){
+
+const cloud=document.createElement("div");
+
+cloud.className="cloud";
+
+cloud.style.width=(100+Math.random()*180)+"px";
+
+cloud.style.height=(40+Math.random()*60)+"px";
+
+cloud.style.left=(-300-Math.random()*400)+"px";
+
+cloud.style.top=Math.random()*70+"%";
+
+cloud.style.animationDuration=(30+Math.random()*35)+"s";
+
+dreamPlanet.appendChild(cloud);
+
 }
 
-function navigateTo(pageId) {
-    const current = $(`#${currentPage}`);
-    const next = $(`#${pageId}`);
-
-    if (current) {
-        current.classList.add('exit');
-        setTimeout(() => current.classList.remove('active', 'exit'), 1200);
-    }
-
-    setTimeout(() => {
-        next.classList.add('active');
-        currentPage = pageId;
-    }, 600);
 }
 
-/* Extra keyframes for surprise */
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes confetti-fall {
-        0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(110vh) rotate(720deg); opacity: 0.3; }
-    }
-    @keyframes heart-rain-fall {
-        0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-    }
-    @keyframes butterfly-float {
-        0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-        10% { opacity: 1; }
-        25% { transform: translate(50px, -30px) rotate(10deg); }
-        50% { transform: translate(-30px, -60px) rotate(-5deg); }
-        75% { transform: translate(40px, -90px) rotate(15deg); }
-        90% { opacity: 1; }
-        100% { transform: translate(-20px, -120px) rotate(0deg); opacity: 0; }
-    }
-    @keyframes burst-fly {
-        0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
-        100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0; }
-    }
+/* ==========================
+      FLOWERS
+========================== */
+
+function createFlowers(){
+
+const flowers=["🌸","🌺","💮","🌼"];
+
+setInterval(()=>{
+
+const flower=document.createElement("div");
+
+flower.className="flower";
+
+flower.innerHTML=flowers[Math.floor(Math.random()*flowers.length)];
+
+flower.style.left=Math.random()*100+"vw";
+
+flower.style.animationDuration=(8+Math.random()*8)+"s";
+
+dreamPlanet.appendChild(flower);
+
+setTimeout(()=>{
+
+flower.remove();
+
+},17000);
+
+},350);
+
+}
+
+/* ==========================
+      BUTTERFLIES
+========================== */
+
+function createButterflies(){
+
+setInterval(()=>{
+
+const b=document.createElement("div");
+
+b.className="butterfly";
+
+b.innerHTML="🦋";
+
+b.style.top=Math.random()*90+"vh";
+
+b.style.animationDuration=(10+Math.random()*8)+"s";
+
+dreamPlanet.appendChild(b);
+
+setTimeout(()=>{
+
+b.remove();
+
+},18000);
+
+},1200);
+
+}
+
+/* ==========================
+      ISLAND GLOW
+========================== */
+
+setInterval(()=>{
+
+if(dreamPlanet.classList.contains("active")){
+
+floatingIsland.animate([
+
+{
+
+boxShadow:"0 0 25px rgba(255,255,255,.15)"
+
+},
+
+{
+
+boxShadow:"0 0 60px rgba(255,200,255,.5)"
+
+},
+
+{
+
+boxShadow:"0 0 25px rgba(255,255,255,.15)"
+
+}
+
+],{
+
+duration:2500
+
+});
+
+}
+
+},2800);
+
+/* ==========================
+      AUTO FLOW
+========================== */
+
+function startJourney(){
+
+launchRocket();
+
+createSpaceParticles();
+
+setTimeout(()=>{
+
+arriveDreamPlanet();
+
+},5200);
+
+setTimeout(()=>{
+
+showPage(memoryPage);
+
+},13000);
+
+}
+
+/* ==========================
+      START AFTER PASSWORD
+========================== */
+
+const oldSuccess = unlockSuccess;
+
+unlockSuccess = function(){
+
+oldSuccess();
+
+setTimeout(()=>{
+
+startJourney();
+
+},1800);
+
+};
+/* ======================================================
+        CRYSTAL MEMORIES
+====================================================== */
+
+const memoryPage = document.getElementById("memoryPage");
+const letterPage = document.getElementById("letterPage");
+
+const photoModal = document.getElementById("photoModal");
+const modalImage = document.querySelector("#photoModal img");
+const closeModal = document.querySelector(".closeModal");
+
+const nextMemory = document.querySelector(".nextMemory");
+
+const memoryCards = document.querySelectorAll(".memoryCard");
+
+/* ==========================
+      CARD EFFECTS
+========================== */
+
+memoryCards.forEach(card=>{
+
+card.addEventListener("mouseenter",()=>{
+
+card.animate([
+
+{
+
+transform:"translateY(0px) scale(1)"
+
+},
+
+{
+
+transform:"translateY(-12px) scale(1.03)"
+
+}
+
+],{
+
+duration:300,
+
+fill:"forwards"
+
+});
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.animate([
+
+{
+
+transform:"translateY(-12px) scale(1.03)"
+
+},
+
+{
+
+transform:"translateY(0px) scale(1)"
+
+}
+
+],{
+
+duration:300,
+
+fill:"forwards"
+
+});
+
+});
+
+});
+
+/* ==========================
+      IMAGE MODAL
+========================== */
+
+memoryCards.forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+const img=card.querySelector("img");
+
+modalImage.src=img.src;
+
+photoModal.classList.add("active");
+
+});
+
+});
+
+/* ==========================
+      CLOSE MODAL
+========================== */
+
+closeModal.addEventListener("click",()=>{
+
+photoModal.classList.remove("active");
+
+});
+
+photoModal.addEventListener("click",(e)=>{
+
+if(e.target===photoModal){
+
+photoModal.classList.remove("active");
+
+}
+
+});
+
+/* ==========================
+      CRYSTAL SPARKLES
+========================== */
+
+function crystalSparkle(){
+
+const sparkle=document.createElement("div");
+
+sparkle.className="sparkle";
+
+sparkle.style.left=Math.random()*100+"vw";
+
+sparkle.style.top=Math.random()*100+"vh";
+
+memoryPage.appendChild(sparkle);
+
+setTimeout(()=>{
+
+sparkle.remove();
+
+},2500);
+
+}
+
+setInterval(()=>{
+
+if(memoryPage.classList.contains("active")){
+
+crystalSparkle();
+
+}
+
+},200);
+
+/* ==========================
+      NEXT BUTTON
+========================== */
+
+nextMemory.addEventListener("click",()=>{
+
+photoModal.classList.remove("active");
+
+showPage(letterPage);
+
+startLetter();
+
+});
+
+/* ==========================
+      KEYBOARD
+========================== */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+photoModal.classList.remove("active");
+
+}
+
+});
+
+/* ==========================
+      AUTO GLOW
+========================== */
+
+setInterval(()=>{
+
+memoryCards.forEach(card=>{
+
+card.animate([
+
+{
+
+boxShadow:"0 10px 25px rgba(0,0,0,.25)"
+
+},
+
+{
+
+boxShadow:"0 0 35px rgba(180,120,255,.45)"
+
+},
+
+{
+
+boxShadow:"0 10px 25px rgba(0,0,0,.25)"
+
+}
+
+],{
+
+duration:2200
+
+});
+
+});
+
+},2600);
+
+/* ==========================
+      RANDOM FLOAT
+========================== */
+
+setInterval(()=>{
+
+const cards=document.querySelectorAll(".memoryCard");
+
+if(cards.length===0)return;
+
+const card=cards[Math.floor(Math.random()*cards.length)];
+
+card.animate([
+
+{
+
+transform:"translateY(0)"
+
+},
+
+{
+
+transform:"translateY(-8px)"
+
+},
+
+{
+
+transform:"translateY(0)"
+
+}
+
+],{
+
+duration:900
+
+});
+
+},1800);
+
+/* ==========================
+      MEMORY ENTRY
+========================== */
+
+function startMemories(){
+
+showPage(memoryPage);
+
+memoryCards.forEach((card,index)=>{
+
+card.style.opacity="0";
+
+setTimeout(()=>{
+
+card.style.opacity="1";
+
+card.classList.add("fadeUp");
+
+},index*250);
+
+});
+
+}
+/* ======================================================
+        SECRET LETTER + GIFT
+====================================================== */
+
+const envelope = document.getElementById("envelope");
+const letterTyping = document.getElementById("letterTyping");
+const nextGift = document.getElementById("nextGift");
+
+const giftPage = document.getElementById("giftPage");
+const giftBox = document.getElementById("giftBox");
+const giftReveal = document.getElementById("giftReveal");
+
+/* ==========================
+      LETTER
+========================== */
+
+const letterText = `
+
+Happy World Girlfriend Day ❤️
+
+If you're reading this...
+
+it means you've reached
+the most special place
+inside this little universe.
+
+Every star here,
+every color,
+every animation,
+
+was made with one thought...
+
+You.
+
+Thank you
+for existing.
+
+✨
 `;
-document.head.appendChild(style);
+
+/* ==========================
+      START LETTER
+========================== */
+
+function startLetter(){
+
+envelope.classList.add("open");
+
+letterTyping.innerHTML="";
+
+let i=0;
+
+const typing=setInterval(()=>{
+
+letterTyping.innerHTML+=letterText.charAt(i);
+
+i++;
+
+if(i>=letterText.length){
+
+clearInterval(typing);
+
+nextGift.classList.remove("hidden");
+
+}
+
+},38);
+
+}
+
+/* ==========================
+      HEARTS
+========================== */
+
+function floatingHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="floatingHeart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.bottom="0";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},5000);
+
+}
+
+setInterval(()=>{
+
+if(letterPage.classList.contains("active")){
+
+floatingHeart();
+
+}
+
+},350);
+
+/* ==========================
+      NEXT
+========================== */
+
+nextGift.addEventListener("click",()=>{
+
+showPage(giftPage);
+
+});
+
+/* ==========================
+      OPEN GIFT
+========================== */
+
+giftBox.addEventListener("click",()=>{
+
+giftBox.classList.add("open");
+
+confettiExplosion();
+
+heartBurst();
+
+setTimeout(()=>{
+
+giftReveal.classList.add("show");
+
+},900);
+
+});
+
+/* ==========================
+      CONFETTI
+========================== */
+
+function confettiExplosion(){
+
+for(let i=0;i<220;i++){
+
+const c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=
+
+`hsl(${Math.random()*360},100%,65%)`;
+
+c.style.animationDuration=
+
+(2+Math.random()*3)+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+
+c.remove();
+
+},5000);
+
+}
+
+}
+
+/* ==========================
+      HEART BURST
+========================== */
+
+function heartBurst(){
+
+for(let i=0;i<80;i++){
+
+const h=document.createElement("div");
+
+h.className="rainHeart";
+
+h.innerHTML="❤️";
+
+h.style.left=50+"vw";
+
+h.style.top=50+"vh";
+
+h.animate([
+
+{
+
+transform:"translate(0,0) scale(.3)",
+
+opacity:1
+
+},
+
+{
+
+transform:
+
+`translate(${(Math.random()-.5)*700}px,
+
+${(Math.random()-.5)*700}px)
+
+scale(1.4)`,
+
+opacity:0
+
+}
+
+],{
+
+duration:2200
+
+});
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+
+h.remove();
+
+},2300);
+
+}
+
+}
+
+/* ==========================
+      AUTO CLOSE
+========================== */
+
+giftReveal.addEventListener("click",()=>{
+
+giftReveal.classList.remove("show");
+
+showEnding();
+
+});
+/* ======================================================
+        FINAL ENDING
+====================================================== */
+
+const endingPage = document.getElementById("endingPage");
+const restartJourney = document.getElementById("restartJourney");
+const finalHeart = document.getElementById("finalHeart");
+
+/* ==========================
+      SHOW ENDING
+========================== */
+
+function showEnding(){
+
+showPage(endingPage);
+
+createEndingStars();
+
+createAurora();
+
+createLightOrbs();
+
+}
+
+/* ==========================
+      SHOOTING STARS
+========================== */
+
+function createEndingStars(){
+
+setInterval(()=>{
+
+if(!endingPage.classList.contains("active")) return;
+
+const star=document.createElement("div");
+
+star.className="finalStar";
+
+star.style.left=(window.innerWidth+150)+"px";
+
+star.style.top=Math.random()*250+"px";
+
+endingPage.appendChild(star);
+
+setTimeout(()=>{
+
+star.remove();
+
+},5000);
+
+},2200);
+
+}
+
+/* ==========================
+      FLOATING LIGHTS
+========================== */
+
+function createLightOrbs(){
+
+setInterval(()=>{
+
+if(!endingPage.classList.contains("active")) return;
+
+const orb=document.createElement("div");
+
+orb.className="lightOrb";
+
+const size=20+Math.random()*60;
+
+orb.style.width=size+"px";
+
+orb.style.height=size+"px";
+
+orb.style.left=Math.random()*100+"vw";
+
+orb.style.animationDuration=(8+Math.random()*8)+"s";
+
+endingPage.appendChild(orb);
+
+setTimeout(()=>{
+
+orb.remove();
+
+},18000);
+
+},500);
+
+}
+
+/* ==========================
+      AURORA
+========================== */
+
+function createAurora(){
+
+const aurora=document.getElementById("auroraOverlay");
+
+if(!aurora) return;
+
+aurora.animate([
+
+{
+
+opacity:.2
+
+},
+
+{
+
+opacity:.8
+
+},
+
+{
+
+opacity:.2
+
+}
+
+],{
+
+duration:12000,
+
+iterations:Infinity
+
+});
+
+}
+
+/* ==========================
+      FINAL HEART
+========================== */
+
+setInterval(()=>{
+
+if(!endingPage.classList.contains("active")) return;
+
+finalHeart.animate([
+
+{
+
+transform:"scale(1)"
+
+},
+
+{
+
+transform:"scale(1.25)"
+
+},
+
+{
+
+transform:"scale(1)"
+
+}
+
+],{
+
+duration:1500
+
+});
+
+},1800);
+
+/* ==========================
+      RESTART
+========================== */
+
+restartJourney.addEventListener("click",()=>{
+
+location.reload();
+
+});
+
+/* ==========================
+      ESC CLOSE
+========================== */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+giftReveal.classList.remove("show");
+
+photoModal.classList.remove("active");
+
+wrongOverlay.classList.remove("show");
+
+}
+
+});
+
+/* ==========================
+      PAGE TRANSITION
+========================== */
+
+function transition(nextPage){
+
+document.querySelector(".page.active")?.classList.remove("active");
+
+setTimeout(()=>{
+
+nextPage.classList.add("active");
+
+},350);
+
+}
+
+/* ==========================
+      MUSIC FADE
+========================== */
+
+function fadeMusic(targetVolume,duration=1000){
+
+if(!music) return;
+
+const start=music.volume;
+
+const step=(targetVolume-start)/20;
+
+let count=0;
+
+const interval=setInterval(()=>{
+
+count++;
+
+music.volume=Math.max(0,Math.min(1,music.volume+step));
+
+if(count>=20){
+
+clearInterval(interval);
+
+music.volume=targetVolume;
+
+}
+
+},duration/20);
+
+}
+
+/* ==========================
+      VISIBILITY
+========================== */
+
+document.addEventListener("visibilitychange",()=>{
+
+if(document.hidden){
+
+music.pause();
+
+}else if(playing){
+
+music.play().catch(()=>{});
+
+}
+
+});
+
+/* ==========================
+      WINDOW RESIZE
+========================== */
+
+window.addEventListener("resize",()=>{
+
+document.documentElement.style.setProperty(
+
+"--vw",
+
+window.innerWidth+"px"
+
+);
+
+});
+
+/* ==========================
+      END MESSAGE
+========================== */
+
+console.log(
+"%cMade with ❤️",
+"color:#ff66b3;font-size:18px;font-weight:bold;"
+);
