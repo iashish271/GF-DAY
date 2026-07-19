@@ -1,199 +1,981 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Little Universe Made Just For You ✨</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Little Universe Made Just For You ✨</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700&family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <!-- ========== LOADING / INTRO ========== -->
-    <div id="intro-screen">
-        <div id="intro-stars"></div>
-        <div id="intro-glow-star" class="intro-star-glow"></div>
-        <div id="intro-text-container">
-            <p class="intro-line" data-text="Among billions of stars..."></p>
-            <p class="intro-line" data-text="One shines differently..."></p>
-            <p class="intro-line" data-text="Maybe it's you."></p>
-        </div>
-        <div id="intro-hint" class="intro-hint hidden">✨ Click the star ✨</div>
+
+
+<!-- ========================= -->
+
+<!-- CUSTOM CURSOR -->
+
+<!-- ========================= -->
+
+<div id="cursor"></div>
+
+<div id="cursor-blur"></div>
+
+
+
+<!-- ========================= -->
+
+<!-- MUSIC -->
+
+<!-- ========================= -->
+
+<audio id="bgMusic" loop>
+
+<source src="song.mp3" type="audio/mpeg">
+
+</audio>
+
+
+
+<button id="musicToggle">
+
+🎵
+
+</button>
+
+
+
+<!-- ========================= -->
+
+<!-- LOADING SCREEN -->
+
+<!-- ========================= -->
+
+<section id="loadingScreen">
+
+<div class="loader-heart">
+
+❤️
+
+</div>
+
+<p>
+
+Loading your universe...
+
+</p>
+
+</section>
+
+
+
+<!-- ========================= -->
+
+<!-- INTRO -->
+
+<!-- ========================= -->
+
+<section id="introPage" class="page active">
+
+
+
+<div id="introStars"></div>
+
+
+
+<div class="introContent">
+
+
+
+<h3 class="introLine"
+
+data-text="Among billions of stars...">
+
+</h3>
+
+
+
+<h3 class="introLine"
+
+data-text="One shines differently...">
+
+</h3>
+
+
+
+<h2 class="introLine"
+
+data-text="Maybe it's you.">
+
+</h2>
+
+
+
+<div id="mainStar">
+
+⭐
+
+</div>
+
+
+
+<p id="clickStar">
+
+Click the glowing star
+
+</p>
+
+
+
+</div>
+
+</section>
+
+
+
+<!-- ========================= -->
+
+<!-- EXPLOSION -->
+
+<!-- ========================= -->
+
+<div id="explosionOverlay">
+
+<div id="explosionParticles"></div>
+
+<div id="nebula"></div>
+
+</div>
+
+
+
+<!-- ========================= -->
+
+<!-- PASSWORD PAGE -->
+
+<!-- ========================= -->
+
+<section id="passwordPage"
+
+class="page">
+
+
+
+<div id="passwordStars"></div>
+
+
+
+<div id="planetWrapper">
+
+
+
+<div id="planetGlow"></div>
+
+
+
+<div id="planet">
+
+
+
+<div class="planetSurface"></div>
+
+<div class="planetRing"></div>
+
+<div id="planetLight"></div>
+
+<div id="planetCrack"></div>
+
+
+
+<div id="planetLock">
+
+🔒
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+<div class="passwordBox">
+
+
+
+<h2>
+
+Every universe has a secret.
+
+</h2>
+
+
+
+<p>
+
+Only the right heart knows it.
+
+</p>
+
+
+
+<div class="inputArea">
+
+
+
+<input
+
+type="password"
+
+id="passwordInput"
+
+placeholder="✨ Enter the Secret..."
+
+autocomplete="off"
+
+
+
+>
+
+
+
+<button
+
+id="unlockBtn">
+
+Unlock 💖
+
+</button>
+
+
+
+</div>
+
+
+
+<p id="passwordError"></p>
+
+
+
+</div>
+
+
+
+<!-- WRONG PASSWORD OVERLAY -->
+
+<div
+
+id="wrongOverlay"
+
+class="hidden"
+
+>
+
+
+
+<div class="wrongCard">
+
+
+
+<img
+
+src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjY0NTQ1OHlpeDd5aGZqMmpqcjNla2dmYW9rYTZmeHhybjBpZHVraCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ev477g37MJORyOWfdG/giphy.gif"
+
+alt="Cute GIF"
+
+>
+
+
+
+<h2 id="wrongMessage">
+
+</h2>
+
+
+
+<button id="retryBtn">
+
+💖 Try Again
+
+</button>
+
+
+
+</div>
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- ========================= -->
+
+<!-- SPACE TRAVEL -->
+
+<!-- Continue Next Part -->
+
+    <!-- ========================= -->
+<!-- SPACE TRAVEL PAGE -->
+<!-- ========================= -->
+
+<section id="spacePage" class="page">
+
+    <div id="spaceBackground">
+
+        <div id="galaxyLayer"></div>
+
+        <div id="nebulaLayer"></div>
+
+        <div id="auroraLayer"></div>
+
+        <div id="starField"></div>
+
+        <div id="shootingStars"></div>
+
+        <div id="spaceDust"></div>
+
     </div>
 
-    <!-- ========== EXPLOSION OVERLAY ========== -->
-    <div id="explosion-overlay">
-        <div id="explosion-particles"></div>
-        <div id="nebula-bg"></div>
+    <div id="cameraOverlay"></div>
+
+    <div id="saturn"></div>
+
+    <div id="moon"></div>
+
+    <div id="floatingHearts"></div>
+
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- DREAM PLANET -->
+<!-- ========================= -->
+
+<section id="dreamPage" class="page">
+
+    <div id="dreamSky"></div>
+
+    <div id="dreamClouds"></div>
+
+    <div id="dreamRainbow"></div>
+
+    <div id="dreamMountains"></div>
+
+    <div id="dreamGlow"></div>
+
+    <div id="petalsContainer"></div>
+
+    <div id="butterflyContainer"></div>
+
+
+
+
+
+    <div class="welcomeCard glass">
+
+
+
+        <div class="planetMini">
+
+            🌎
+
+        </div>
+
+
+
+        <h1>
+
+            Welcome...
+
+        </h1>
+
+
+
+        <h2>
+
+            A little universe made only for you.
+
+        </h2>
+
+
+
+        <p>
+
+            Every star,
+
+            every cloud,
+
+            every little sparkle here
+
+            exists because someone
+
+            wanted you to smile.
+
+        </p>
+
+
+
+        <button id="enterMemories">
+
+            Explore Memories ✨
+
+        </button>
+
+
+
     </div>
 
-    <!-- ========== PASSWORD PAGE ========== -->
-    <section id="page-password" class="page">
-        <div id="password-stars"></div>
-        <div id="password-planet">
-            <div class="planet-body">
-                <div class="planet-surface"></div>
-                <div class="planet-glow"></div>
-                <div class="planet-ring"></div>
-                <div class="planet-lock" id="planet-lock">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                </div>
-                <div class="planet-crack" id="planet-crack"></div>
-                <div class="planet-light" id="planet-light"></div>
-            </div>
-        </div>
-        <div class="password-content">
-            <p class="password-quote">Every universe has a secret.</p>
-            <div class="password-input-glass" id="password-box">
-                <input type="password" id="password-input" placeholder="✨ Enter the secret..." maxlength="20" autocomplete="off">
-                <button id="password-submit">💖 Unlock</button>
-            </div>
-            <p id="password-error" class="password-error hidden"></p>
-        </div>
-        <!-- Wrong password GIF overlay -->
-        <div id="wrong-gif-overlay" class="wrong-overlay hidden">
-            <div class="wrong-gif-card glass">
-                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjY0NTQ1OHlpeDd5aGZqMmpqcjNla2dmYW9rYTZmeHhybjBpZHVraCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ev477g37MJORyOWfdG/giphy.gif" alt="Cute" class="wrong-gif">
-                <p class="wrong-text" id="wrong-text"></p>
-                <button id="try-again-btn" class="btn-cute">💖 Try Again</button>
-            </div>
-        </div>
-    </section>
 
-    <!-- ========== MAGICAL WORLD (Space Travel) ========== -->
-    <section id="page-space" class="page">
-        <div id="space-travel">
-            <div class="space-layer" id="space-galaxy"></div>
-            <div class="space-layer" id="space-nebula"></div>
-            <div class="space-layer" id="space-saturn"></div>
-            <div class="space-layer" id="space-moon"></div>
-            <div class="space-layer" id="space-hearts"></div>
-            <div class="space-layer" id="space-aurora"></div>
-        </div>
-    </section>
 
-    <!-- ========== WELCOME PAGE ========== -->
-    <section id="page-welcome" class="page">
-        <div id="welcome-sky"></div>
-        <div id="welcome-clouds"></div>
-        <div id="welcome-petals"></div>
-        <div id="welcome-butterflies"></div>
-        <div class="welcome-content">
-            <div class="welcome-planet-glass">
-                <div class="welcome-planet-inner"></div>
-            </div>
-            <div class="welcome-text-box glass">
-                <p class="welcome-line" data-text="Welcome to your universe..."></p>
-                <p class="welcome-line" data-text="A place where dreams come true..."></p>
-                <p class="welcome-line" data-text="And love is the only law. 💫"></p>
-            </div>
-            <button id="btn-to-memories" class="btn-cute hidden">
-                <span>Explore Memories</span>
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-            </button>
-        </div>
-    </section>
 
-    <!-- ========== MEMORY SECTION ========== -->
-    <section id="page-memories" class="page">
-        <div id="memory-bg"></div>
-        <div class="memory-header">
-            <h2 class="memory-title">Crystal Memories</h2>
-            <p class="memory-subtitle">Each crystal holds a precious moment ✨</p>
-        </div>
-        <div class="memory-crystals" id="memory-crystals"></div>
-        <div id="crystal-modal" class="crystal-modal hidden">
-            <div class="crystal-modal-content glass">
-                <button class="crystal-close">&times;</button>
-                <div class="crystal-photo-wrapper">
-                    <img id="crystal-photo" src="" alt="Memory">
-                </div>
-                <p class="crystal-caption" id="crystal-caption"></p>
-            </div>
-        </div>
-        <button id="btn-to-letter" class="btn-cute">
-            <span>Open the Letter</span>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </button>
-    </section>
 
-    <!-- ========== SECRET LETTER ========== -->
-    <section id="page-letter" class="page">
-        <div class="letter-scene">
-            <div class="envelope-wrapper" id="envelope-wrapper">
-                <div class="envelope" id="envelope">
-                    <div class="envelope-back"></div>
-                    <div class="envelope-front">
-                        <div class="envelope-heart">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                        </div>
-                        <p class="envelope-label">Tap to Open 💌</p>
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- MEMORY PAGE -->
+<!-- ========================= -->
+
+<section
+
+id="memoryPage"
+
+class="page"
+
+>
+
+
+
+<div id="memoryBackground"></div>
+
+
+
+<div class="memoryHeader">
+
+
+
+<h1>
+
+Crystal Memories
+
+</h1>
+
+
+
+<p>
+
+Touch a crystal
+
+to reveal a memory.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<div
+
+id="crystalContainer"
+
+>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo1.jpg"
+
+data-caption="One of my favorite memories ❤️"
+
+>
+
+💎
+
+</div>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo2.jpg"
+
+data-caption="A smile worth remembering 🌸"
+
+>
+
+💠
+
+</div>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo3.jpg"
+
+data-caption="Forever unforgettable ✨"
+
+>
+
+🔮
+
+</div>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo4.jpg"
+
+data-caption="Pure happiness 💕"
+
+>
+
+💎
+
+</div>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo5.jpg"
+
+data-caption="Every picture tells a story 🌙"
+
+>
+
+💠
+
+</div>
+
+
+
+<div
+
+class="crystal"
+
+data-photo="images/photo6.jpg"
+
+data-caption="The universe smiled here 💖"
+
+>
+
+🔮
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<button
+
+id="gotoLetter"
+
+class="cuteButton"
+
+>
+
+Open Secret Letter 💌
+
+</button>
+
+
+
+
+
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- PHOTO MODAL -->
+<!-- ========================= -->
+
+<div
+
+id="photoModal"
+
+class="hidden"
+
+>
+
+
+
+<div
+
+class="modalCard"
+
+>
+
+
+
+<button
+
+id="closeModal"
+
+>
+
+✖
+
+</button>
+
+
+
+<img
+
+id="modalImage"
+
+src=""
+
+alt="Memory"
+
+>
+
+
+
+<h2
+
+id="modalCaption"
+
+>
+
+</h2>
+
+
+
+</div>
+
+</div>
+<!-- ========================= -->
+<!-- SECRET LETTER PAGE -->
+<!-- ========================= -->
+
+<section id="letterPage" class="page">
+
+    <div id="letterStars"></div>
+
+    <div class="letterScene">
+
+        <div id="envelopeWrapper">
+
+            <div id="envelope">
+
+                <div class="envelopeBack"></div>
+
+                <div class="envelopeFront">
+
+                    <div class="sealHeart">
+                        ❤️
                     </div>
-                    <div class="envelope-flap" id="envelope-flap"></div>
-                    <div class="letter" id="letter">
-                        <div class="letter-content">
-                            <h3 class="letter-greeting">My Dearest,</h3>
-                            <div class="letter-body" id="letter-body"></div>
-                            <p class="letter-closing">Forever Yours,<br>💕</p>
-                        </div>
+
+                    <p class="tapText">
+                        Tap To Open 💌
+                    </p>
+
+                </div>
+
+                <div class="envelopeFlap"></div>
+
+                <div id="letterPaper">
+
+                    <h1>My Dearest ❤️</h1>
+
+                    <div id="letterTyping">
+
                     </div>
+
+                    <p class="letterEnd">
+
+                        Forever Yours...
+
+                    </p>
+
                 </div>
-            </div>
-        </div>
-        <button id="btn-to-surprise" class="btn-cute hidden">
-            <span>Next Surprise</span>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-        </button>
-    </section>
 
-    <!-- ========== SURPRISE PAGE ========== -->
-    <section id="page-surprise" class="page">
-        <div id="surprise-bg"></div>
-        <div id="surprise-confetti"></div>
-        <div id="surprise-hearts"></div>
-        <div id="surprise-butterflies"></div>
-        <div class="surprise-content">
-            <div class="gift-box" id="gift-box">
-                <div class="gift-lid" id="gift-lid"></div>
-                <div class="gift-body">
-                    <div class="gift-ribbon-v"></div>
-                    <div class="gift-ribbon-h"></div>
-                    <div class="gift-bow" id="gift-bow">🎀</div>
-                </div>
             </div>
-            <h2 class="surprise-title hidden" id="surprise-title">You Are My Greatest Gift! 🎁</h2>
-            <p class="surprise-text hidden" id="surprise-text">Every moment with you is a celebration of love 💕</p>
-        </div>
-        <button id="btn-to-ending" class="btn-cute hidden" id="btn-ending">
-            <span>The Final Chapter</span>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-        </button>
-    </section>
 
-    <!-- ========== ENDING ========== -->
-    <section id="page-ending" class="page">
-        <div id="ending-stars"></div>
-        <div id="ending-moon"></div>
-        <div class="ending-content">
-            <div class="ending-heart" id="ending-heart">💖</div>
-            <div class="ending-text-box">
-                <p class="ending-line" data-text="No matter how huge this universe is..."></p>
-                <p class="ending-line" data-text="Someone made one just for you."></p>
-            </div>
         </div>
-    </section>
 
-    <!-- ========== AUDIO ========== -->
-    <audio id="bg-music" loop>
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
-    <button id="music-toggle" class="music-btn" aria-label="Toggle music">
-        <span class="music-icon">🎵</span>
-        <span class="music-waves"><span></span><span></span><span></span></span>
+    </div>
+
+    <button
+        id="nextGift"
+        class="cuteButton hidden">
+
+        Next Surprise 🎁
+
     </button>
 
-    <script src="script.js"></script>
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- GIFT PAGE -->
+<!-- ========================= -->
+
+<section id="giftPage" class="page">
+
+    <div id="giftBackground"></div>
+
+    <div id="giftParticles"></div>
+
+    <div id="giftScene">
+
+        <div id="giftBox">
+
+            <div id="giftRibbon"></div>
+
+            <div id="giftLid"></div>
+
+            <div id="giftBase"></div>
+
+        </div>
+
+        <h2>
+
+            One Last Surprise...
+
+        </h2>
+
+        <p>
+
+            Open the gift ✨
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- GIFT CONTENT -->
+<!-- ========================= -->
+
+<div id="giftReveal">
+
+    <div class="giftCard glass">
+
+        <img
+            src="images/photo7.jpg"
+            id="giftImage"
+            alt="Special">
+
+        <h1>
+
+            Happy World Girlfriend Day ❤️
+
+        </h1>
+
+        <p>
+
+            Thank you for being the brightest star
+            in my universe.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- CONFETTI -->
+<!-- ========================= -->
+
+<div id="confettiContainer"></div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- HEART RAIN -->
+<!-- ========================= -->
+
+<div id="heartRain"></div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- BUTTERFLY RAIN -->
+<!-- ========================= -->
+
+<div id="butterflyRain"></div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- FINAL PAGE -->
+<!-- ========================= -->
+
+<section id="endingPage" class="page">
+
+    <div id="endingSky"></div>
+
+    <div id="endingStars"></div>
+
+    <div id="endingMoon">
+
+        🌙
+
+    </div>
+
+    <div id="finalHeart">
+
+        ❤️
+
+    </div>
+
+    <div id="endingContent">
+
+        <h1>
+
+            No matter
+
+            how big
+
+            this universe becomes...
+
+        </h1>
+
+        <h2>
+
+            There will always be
+
+            one made
+
+            just for you.
+
+        </h2>
+
+        <button id="restartJourney">
+
+            Start Again ✨
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- ========================= -->
+<!-- FLOATING PARTICLES -->
+<!-- ========================= -->
+
+<div id="sparkleContainer"></div>
+
+<div id="magicDust"></div>
+
+<div id="floatingLights"></div>
+
+<div id="floatingStars"></div>
+
+<div id="floatingClouds"></div>
+
+<div id="auroraOverlay"></div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- HIDDEN EASTER EGGS -->
+<!-- ========================= -->
+
+<div id="moonMessage" class="hidden">
+
+🌙
+
+You found the secret moon.
+
+</div>
+
+<div id="starMessage" class="hidden">
+
+⭐
+
+You caught a shooting star.
+
+</div>
+
+<div id="planetMessage" class="hidden">
+
+🪐
+
+The universe likes curious people.
+
+</div>
+
+
+
+
+
+<script src="script.js"></script>
+
 </body>
+
 </html>
